@@ -84,7 +84,9 @@ int Sniffer::create_packets(){
     for (int i = 0; i < 4; ++i) {
         buff[i] += 48;
     }
-    int dst = std::stoi(buff);
+//    int dst = std::stoi(buff);
+    int dst = 0;
+
     printf("dst: %s y el num: %i \n", buff, dst );
 
 
