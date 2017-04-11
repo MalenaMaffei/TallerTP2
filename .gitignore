@@ -3,3 +3,4 @@ CMakeLists.txt
 cmake-build-debug/
 tp
 tp.dSYM
+.*\.o
