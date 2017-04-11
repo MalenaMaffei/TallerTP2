@@ -5,9 +5,9 @@
 #ifndef TP2_PACKET_H
 #define TP2_PACKET_H
 #include <string>
-using namespace std;
-class Packet {
+using std::string;
 
+class Packet {
 private:
     string data;
     short len;
@@ -31,7 +31,6 @@ public:
     int getDst() const;
 
     void setData(const string &data);
-
 };
 
 

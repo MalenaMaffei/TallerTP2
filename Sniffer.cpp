@@ -4,3 +4,9 @@
 
 #include <fstream>
 #include "Sniffer.h"
+#include <string>
+#include <vector>
+
+const vector<Packet> &Sniffer::getPackets() const {
+    return packets;
+}
