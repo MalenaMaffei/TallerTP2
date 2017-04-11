@@ -6,7 +6,8 @@
 #define TP2_PACKET_H
 #include <string>
 using std::string;
-
+//TODO no se puede usar la puta string http://stackoverflow.com/questions/11181251/saving-hex-values-to-a-c-string
+//http://stackoverflow.com/questions/30423469/store-hex-value-in-string-c
 class Packet {
 private:
     string data;
