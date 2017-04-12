@@ -74,7 +74,7 @@ int Sniffer::create_packets(){
 
 
     std::ostringstream src;
-    src << std::hex << std::setfill('0') << std::uppercase;
+    src << std::hex << std::setfill('0');
     unsigned char buff[5];
     buff[4] = '\0';
     myFile.read((char*)buff, 4);
@@ -89,7 +89,7 @@ int Sniffer::create_packets(){
 
     myFile.read((char*)buff, 4);
     std::ostringstream dst;
-    dst << std::hex << std::setfill('0') << std::uppercase;
+    dst << std::hex << std::setfill('0');
 
     for (int i = 0; i < 4; ++i) {
         dst << std::setw(2) << static_cast<int>(buff[i]);
@@ -99,16 +99,21 @@ int Sniffer::create_packets(){
     int dst1 = 0;
 
 
-
-
 //    TODO malloc del char pointer y hacer destructor en packet
     myFile.seekg(HEADER);
     myFile.read(buffer, len-HEADER);
     cout << "el largo: " << len << endl;
     printf("buffer C: %s salteo el null y el resto: %s\n", buffer, buffer+5);
     cout << "el buffer: " << buffer << endl;
-    string str(buffer);
+//    string str(buffer);
 
+    std::ostringstream data;
+    data << std::hex << std::setfill('0');
+    for (int i = 0; i < len-HEADER; ++i) {
+        data << std::setw(2) << static_cast<int>(buffer[i]);
+    }
+    string str = data.str();
+    cout << "data leida: " << str <<endl;
 
     Packet p = Packet(id,src1,dst1);
     p.setData(str);
