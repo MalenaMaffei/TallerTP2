@@ -12,6 +12,7 @@ Packet::Packet(short id, int src, int dst) {
 
 Packet::~Packet() {
 //por ahora nada que hacer
+//    TODO proximamente desalocar el char pointer
 }
 
 const string &Packet::getData() const {

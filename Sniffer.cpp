@@ -1,6 +1,11 @@
 //
 // Created by male on 08/04/17.
 //
+#include <iostream>
+#include <sstream>
+#include <ios>
+#include <iomanip>
+#include <string>
 
 #include <fstream>
 #include <iostream>
@@ -37,7 +42,7 @@ const vector<Packet> &Sniffer::getPackets() const {
 
 int Sniffer::create_packets(){
     short len;
-    char buffer[1000];
+    char buffer[1026];
     short shorts[50];
     ifstream myFile;
 
@@ -68,28 +73,35 @@ int Sniffer::create_packets(){
     myFile.seekg(12);
 
 
-
-    char buff[5];
+    std::ostringstream src;
+    src << std::hex << std::setfill('0') << std::uppercase;
+    unsigned char buff[5];
     buff[4] = '\0';
-    myFile.read(buff, 4);
+    myFile.read((char*)buff, 4);
     for (int i = 0; i < 4; ++i) {
-        buff[i] += 48;
+        src << std::setw(2) << static_cast<int>(buff[i]);
     }
+    std::cout << "la src obtenida: " << src.str() << "\n";
+    printf("src or 0x%x 0x%x 0x%x 0x%x\n", buff[0], buff[1], buff[2], buff[3]);
 
-    int src = std::stoi(buff);
-    printf("src: %s y el num: %i \n", buff, src);
+    int src1 = 0;
 
 
-    myFile.read(buff, 4);
+    myFile.read((char*)buff, 4);
+    std::ostringstream dst;
+    dst << std::hex << std::setfill('0') << std::uppercase;
+
     for (int i = 0; i < 4; ++i) {
-        buff[i] += 48;
+        dst << std::setw(2) << static_cast<int>(buff[i]);
     }
-//    int dst = std::stoi(buff);
-    int dst = 0;
+    std::cout << "la dst obtenida: " << dst.str() << "\n";
+    printf("dst or 0x%x 0x%x 0x%x 0x%x\n", buff[0], buff[1], buff[2], buff[3]);
+    int dst1 = 0;
 
-    printf("dst: %s y el num: %i \n", buff, dst );
 
 
+
+//    TODO malloc del char pointer y hacer destructor en packet
     myFile.seekg(HEADER);
     myFile.read(buffer, len-HEADER);
     cout << "el largo: " << len << endl;
@@ -98,7 +110,7 @@ int Sniffer::create_packets(){
     string str(buffer);
 
 
-    Packet p = Packet(id,src,dst);
+    Packet p = Packet(id,src1,dst1);
     p.setData(str);
     string s = p.getData();
     cout << s << endl;

@@ -18,7 +18,6 @@ using std::ifstream;
 using std::cout;
 
 int main(int argc, char ** argv){
-
     string file = argv[1];
     Sniffer sniff = Sniffer(file);
     sniff.create_packets();
