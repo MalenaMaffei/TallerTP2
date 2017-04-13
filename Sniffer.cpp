@@ -89,10 +89,9 @@ int Sniffer::create_packets(){
     for (int i = 0; i < 4; ++i) {
         src << std::setw(2) << static_cast<int>(buff[i]);
     }
-    std::cout << "\nla src obtenida: " << src.str() << "\n";
+    string src1 = src.str();
+    std::cout << "\nla src obtenida: " << src1 << "\n";
     printf("src or 0x%x 0x%x 0x%x 0x%x\n", buff[0], buff[1], buff[2], buff[3]);
-
-    int src1 = 0;
 
 
     myFile.read((char*)buff, 4);
@@ -102,9 +101,9 @@ int Sniffer::create_packets(){
     for (int i = 0; i < 4; ++i) {
         dst << std::setw(2) << static_cast<int>(buff[i]);
     }
-    std::cout << "\nla dst obtenida: " << dst.str() << "\n";
+    string dst1 = dst.str();
+    std::cout << "\nla dst obtenida: " << dst1 << "\n";
     printf("dst or 0x%x 0x%x 0x%x 0x%x\n", buff[0], buff[1], buff[2], buff[3]);
-    int dst1 = 0;
 
 
     myFile.seekg(HEADER);
@@ -125,6 +124,8 @@ int Sniffer::create_packets(){
     p.setData(str);
     string s = p.getData();
     cout << s << endl;
+    cout << "src paquete: " << p.getSrc() << endl;
+    cout << "dst paquete: " << p.getDst() << endl;
     this->packets.push_back(p);
 
 

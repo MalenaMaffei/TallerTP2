@@ -2,6 +2,6 @@ CAPTURA
 Lee el archi lo parseo y x c uno crea un Packet
 Sniffer-> lee arch usando malloc para los datos, crea packets.
 Packet-> tiene sus datas, implementa destructor del char ptr, saben si otro packet es su hermano.
-    attr complete? y part nr.
+    attr complete? y part nr. attr primero, ultimo, parte, entero. Despues me fijo como lo escondo
 Detector -> Lee arch, crea reglas, hace que una regla lea un paquete.
 Regla- > Agarra un packet y tira alerta si necesario

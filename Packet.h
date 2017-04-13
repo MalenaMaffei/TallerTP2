@@ -13,11 +13,11 @@ private:
     string data;
     short len;
     short id;
-    int src;
-    int dst;
+    string src;
+    string dst;
 
 public:
-    Packet(short id, int src, int dst);
+    Packet(short id, string src, string dst);
 
     virtual ~Packet();
 
@@ -27,9 +27,9 @@ public:
 
     short getId() const;
 
-    int getSrc() const;
+    const string getSrc() const;
 
-    int getDst() const;
+    const string getDst() const;
 
     void setData(const string &data);
 };
