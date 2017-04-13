@@ -4,3 +4,4 @@ cmake-build-debug/
 tp
 tp.dSYM
 *.[o]
+.DS_Store
