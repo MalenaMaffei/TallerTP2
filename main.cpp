@@ -1,7 +1,3 @@
-//
-// Created by male on 07/04/17.
-//
-
 #include <cstdio>
 #include <string>
 #include <iostream>
@@ -25,7 +21,6 @@ int main(int argc, char ** argv){
 
     string s = p.getData();
     cout << "data sacada del main: " << s << endl;
-//
-//
+
     return 0;
 }

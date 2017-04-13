@@ -64,11 +64,19 @@ int Sniffer::create_packets(){
     id = ntohs(id);
     cout << " El convertido id : " << id << endl;
 
-    //    lee flags
-    myFile.read((char*) shorts, 2);
-    short flag = shorts[2];
-    cout << " El original flag: " << flag << endl;
-
+    //    lee offset
+    unsigned char fo[2];
+    myFile.read((char*) fo, 2);
+    unsigned char flag = fo[0];
+    // flag parece estar bien, re chequear despues
+    printf("\nEl orig flag 0x%x\n",flag);
+    flag <<= 2;
+    flag >>= 7;
+    printf("El shift flag 0x%x\n",flag);
+    printf("\nEl orig off 0x%x 0x%x\n",fo[0], fo[1]);
+    fo[0] <<= 3;
+    fo[0] >>= 3;
+    printf("El shift off 0x%x 0x%x\n",fo[0], fo[1]);
     //ignora 4 bytes
     myFile.seekg(12);
 
@@ -81,7 +89,7 @@ int Sniffer::create_packets(){
     for (int i = 0; i < 4; ++i) {
         src << std::setw(2) << static_cast<int>(buff[i]);
     }
-    std::cout << "la src obtenida: " << src.str() << "\n";
+    std::cout << "\nla src obtenida: " << src.str() << "\n";
     printf("src or 0x%x 0x%x 0x%x 0x%x\n", buff[0], buff[1], buff[2], buff[3]);
 
     int src1 = 0;
@@ -94,18 +102,16 @@ int Sniffer::create_packets(){
     for (int i = 0; i < 4; ++i) {
         dst << std::setw(2) << static_cast<int>(buff[i]);
     }
-    std::cout << "la dst obtenida: " << dst.str() << "\n";
+    std::cout << "\nla dst obtenida: " << dst.str() << "\n";
     printf("dst or 0x%x 0x%x 0x%x 0x%x\n", buff[0], buff[1], buff[2], buff[3]);
     int dst1 = 0;
 
 
-//    TODO malloc del char pointer y hacer destructor en packet
     myFile.seekg(HEADER);
     myFile.read(buffer, len-HEADER);
-    cout << "el largo: " << len << endl;
-    printf("buffer C: %s salteo el null y el resto: %s\n", buffer, buffer+5);
+    cout << "\nel largo: " << len << endl;
+    printf("\nbuffer C: %s salteo el null y el resto: %s\n", buffer, buffer+5);
     cout << "el buffer: " << buffer << endl;
-//    string str(buffer);
 
     std::ostringstream data;
     data << std::hex << std::setfill('0');
@@ -113,7 +119,7 @@ int Sniffer::create_packets(){
         data << std::setw(2) << static_cast<int>(buffer[i]);
     }
     string str = data.str();
-    cout << "data leida: " << str <<endl;
+    cout << "\ndata leida: " << str <<endl;
 
     Packet p = Packet(id,src1,dst1);
     p.setData(str);

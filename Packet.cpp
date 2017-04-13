@@ -1,9 +1,6 @@
-//
-// Created by male on 08/04/17.
-//
 #include <string>
 #include "Packet.h"
-
+// TODO implementar tema de flags y offsets
 Packet::Packet(short id, int src, int dst) {
     this->id = id;
     this->src = src;
@@ -13,6 +10,7 @@ Packet::Packet(short id, int src, int dst) {
 Packet::~Packet() {
 //por ahora nada que hacer
 //    TODO proximamente desalocar el char pointer
+// seguramente no haga falta
 }
 
 const string &Packet::getData() const {
