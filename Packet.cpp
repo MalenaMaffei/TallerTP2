@@ -10,8 +10,6 @@ Packet::Packet(short id, string src, string dst) {
 
 Packet::~Packet() {
 //por ahora nada que hacer
-//    TODO proximamente desalocar el char pointer
-// seguramente no haga falta
 }
 
 const string &Packet::getData() const {
@@ -22,7 +20,7 @@ short Packet::getLength() const {
     return len;
 }
 
-short Packet::getId() const {
+const short Packet::getId() const {
     return id;
 }
 
