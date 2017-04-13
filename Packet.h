@@ -15,6 +15,12 @@ private:
     short id;
     string src;
     string dst;
+    // TODO chequear bien como las necesito
+    // short offset;
+    // unsigned char flag;
+
+    bool complete;
+
 
 public:
     Packet(short id, string src, string dst);
@@ -30,6 +36,8 @@ public:
     const string getSrc() const;
 
     const string getDst() const;
+
+    const bool is_complete() const;
 
     void setData(const string &data);
 };

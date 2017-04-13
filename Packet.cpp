@@ -34,6 +34,10 @@ const string Packet::getDst() const {
     return dst;
 }
 
+const bool Packet::is_complete() const {
+    return complete;
+}
+
 void Packet::setData(const string &data) {
     Packet::data = data;
 }
