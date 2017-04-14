@@ -44,19 +44,21 @@ int Sniffer::create_packets(){
 
     //ignora primeros dos
     // myFile.seekg(2);
-    myFile.seekg(2, ios::cur);
-    while(!myFile.eof()){
-        cout << "entro al loop"<<endl;
+    // myFile.seekg(2, ios::cur);
+    while(myFile.peek() != EOF){
+        // cout << "------------entro al loop-----------"<<endl;
         short len;
-        unsigned char buffer[1026];
-        short shorts[50];
+        unsigned char buffer[1050];
+        short shorts[3];
 
-
+        myFile.seekg(2, ios::cur);
     //lee length
 
         myFile.read((char*) shorts, 2);
         len = shorts[0];
+        // cout << "len antes de cambiar: " << len << endl;
         len = ntohs(len);
+        // cout << "len dsp de cambiar: " << len << endl;
 
     //    lee id
         unsigned char id_buff[2];
@@ -94,12 +96,12 @@ int Sniffer::create_packets(){
         unsigned char buff[5];
         buff[4] = '\0';
         myFile.read((char*)buff, 4);
-        string src1 = hex_converter(buff, 4);
+        string src = hex_converter(buff, 4);
     //    printf("src or 0x%x 0x%x 0x%x 0x%x\n", buff[0], buff[1], buff[2], buff[3]);
 
 
         myFile.read((char*)buff, 4);
-        string dst1 = hex_converter(buff, 4);
+        string dst = hex_converter(buff, 4);
     //    printf("dst or 0x%x 0x%x 0x%x 0x%x\n", buff[0], buff[1], buff[2], buff[3]);
 
 
@@ -111,16 +113,14 @@ int Sniffer::create_packets(){
     //    }
         string str = hex_converter(buffer, len-HEADER);
 
-        Packet p = Packet(id,src1,dst1);
+        Packet p = Packet(id,src,dst);
         p.setData(str);
-        string s = p.getData();
+        // string s = p.getData();
     //    cout << s << endl;
     //    cout << "src paquete: " << p.getSrc() << endl;
     //    cout << "dst paquete: " << p.getDst() << endl;
         this->packets.push_back(p);
-
-        //TODO NO FUNCIONA ESTO salteo los primeros dos del prox y si no estan EOF
-        myFile.seekg(2, ios::cur);
+        // myFile.seekg(2, ios::cur);
     }
 
 

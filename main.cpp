@@ -27,7 +27,9 @@ int main(int argc, char ** argv){
     for (size_t j = 0; j < i; j++) {
         Packet p = packets[j];
         string s = p.getData();
+        cout << "id: " << p.getId() << " src: " << p.getSrc() << " dst: " << p.getDst() << endl;
         cout << "data sacada del p"<< j<<": " << s << endl;
+
     }
     // Packet p = packets.front();
     // Packet pB = packets.back();
