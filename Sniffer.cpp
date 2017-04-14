@@ -94,13 +94,10 @@ int Sniffer::create_packets(){
         string src = hex_converter(buff, 4);
     //    printf("src or 0x%x 0x%x 0x%x 0x%x\n", buff[0], buff[1], buff[2], buff[3]);
 
-
         myFile.read((char*)buff, 4);
         string dst = hex_converter(buff, 4);
     //    printf("dst or 0x%x 0x%x 0x%x 0x%x\n", buff[0], buff[1], buff[2], buff[3]);
 
-
-        // myFile.seekg(HEADER);
         myFile.read((char*)buffer, data_len);
 
     //    for (int i = 0; i < 10; ++i) {
