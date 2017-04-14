@@ -1,7 +1,7 @@
 #include <string>
 #include "Packet.h"
 // TODO implementar tema de flags y offsets
-Packet::Packet(short id, string src, string dst) {
+Packet::Packet(string id, string src, string dst) {
     this->id = id;
     this->src = src;
     this->dst = dst;
@@ -20,7 +20,7 @@ short Packet::getLength() const {
     return len;
 }
 
-const short Packet::getId() const {
+const string Packet::getId() const {
     return id;
 }
 

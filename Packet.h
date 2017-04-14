@@ -11,7 +11,7 @@ class Packet {
 private:
     string data;
     short len;
-    short id;
+    string id;
     string src;
     string dst;
     // TODO chequear bien como las necesito
@@ -22,7 +22,7 @@ private:
 
 
 public:
-    Packet(short id, string src, string dst);
+    Packet(string id, string src, string dst);
 
     virtual ~Packet();
 
@@ -30,7 +30,7 @@ public:
 
     short getLength() const;
 
-    const short getId() const;
+    const string getId() const;
 
     const string getSrc() const;
 
