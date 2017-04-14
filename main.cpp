@@ -19,18 +19,23 @@ int main(int argc, char ** argv){
     vector<Packet> packets;
     string file = argv[1];
     Sniffer sniff = Sniffer(file, packets);
-    Sniffer sniffB = Sniffer(file, packets);
+    // Sniffer sniffB = Sniffer(file, packets);
     sniff.create_packets();
-    sniffB.create_packets();
+    // sniffB.create_packets();
     int i = packets.size();
     cout << "elementos: " << i << endl;
-    Packet p = packets.front();
-    Packet pB = packets.back();
-
-    string s = p.getData();
-    cout << "data sacada del p1: " << s << endl;
-    s = pB.getData();
-    cout << "data sacada del p2: " << s << endl;
+    for (size_t j = 0; j < i; j++) {
+        Packet p = packets[j];
+        string s = p.getData();
+        cout << "data sacada del p"<< j<<": " << s << endl;
+    }
+    // Packet p = packets.front();
+    // Packet pB = packets.back();
+    //
+    // string s = p.getData();
+    // cout << "data sacada del p1: " << s << endl;
+    // s = pB.getData();
+    // cout << "data sacada del p2: " << s << endl;
 
     return 0;
 }
