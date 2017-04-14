@@ -4,7 +4,7 @@
 #include "Packet.h"
 #include "Sniffer.h"
 #include <fstream>
-
+#include <vector>
 #define HEADER 20
 using std::string;
 using std::endl;
@@ -29,15 +29,7 @@ int main(int argc, char ** argv){
         string s = p.getData();
         cout << "id: " << p.getId() << " src: " << p.getSrc() << " dst: " << p.getDst() << endl;
         cout << "data sacada del p"<< j<<": " << s << endl;
-
     }
-    // Packet p = packets.front();
-    // Packet pB = packets.back();
-    //
-    // string s = p.getData();
-    // cout << "data sacada del p1: " << s << endl;
-    // s = pB.getData();
-    // cout << "data sacada del p2: " << s << endl;
 
     return 0;
 }

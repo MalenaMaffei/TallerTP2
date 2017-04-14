@@ -1,7 +1,8 @@
 #include <iostream>
 #include <sstream>
 #include <iomanip>
-
+#include <string>
+#include <vector>
 #include <fstream>
 #include "Sniffer.h"
 #include <netinet/in.h>
@@ -15,8 +16,8 @@ using std::ifstream;
 using std::cout;
 using std::vector;
 
-Sniffer::Sniffer(const string &filename, vector<Packet> &packets) : filename(filename), packets(packets) {
-    this->filename = filename;
+Sniffer::Sniffer(const string &file, vector<Packet> &pkts) : file(file), packets(pkts) {
+    this->file = file;
     this->packets = packets;
 }
 
@@ -37,15 +38,14 @@ string hex_converter(unsigned char* buffer, size_t len){
 }
 
 int Sniffer::create_packets(){
-
     ifstream myFile;
 
-    myFile.open(Sniffer::filename, ios::in | ios::binary);
+    myFile.open(Sniffer::file, ios::in | ios::binary);
 
     //ignora primeros dos
     // myFile.seekg(2);
     // myFile.seekg(2, ios::cur);
-    while(myFile.peek() != EOF){
+    while (myFile.peek() != EOF){
         // cout << "------------entro al loop-----------"<<endl;
         short len;
         unsigned char buffer[1050];
@@ -115,15 +115,9 @@ int Sniffer::create_packets(){
 
         Packet p = Packet(id,src,dst);
         p.setData(str);
-        // string s = p.getData();
-    //    cout << s << endl;
-    //    cout << "src paquete: " << p.getSrc() << endl;
-    //    cout << "dst paquete: " << p.getDst() << endl;
+
         this->packets.push_back(p);
-        // myFile.seekg(2, ios::cur);
     }
-
-
 
     return 0;
 }

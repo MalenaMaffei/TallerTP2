@@ -14,15 +14,14 @@ using std::vector;
 
 class Sniffer {
 public:
-
-    Sniffer(const string &filename, vector<Packet> &packets);
+    Sniffer(const string &file, vector<Packet> &pkts);
 
     int create_packets();
 
     virtual ~Sniffer();
 
 private:
-    string filename;
+    string file;
     vector<Packet> & packets;
 };
 
