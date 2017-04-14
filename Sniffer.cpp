@@ -42,25 +42,22 @@ int Sniffer::create_packets(){
 
     myFile.open(Sniffer::file, ios::in | ios::binary);
 
-    //ignora primeros dos
-    // myFile.seekg(2);
-    // myFile.seekg(2, ios::cur);
     while (myFile.peek() != EOF){
-        // cout << "------------entro al loop-----------"<<endl;
         short len;
+        short data_len;
         unsigned char buffer[1050];
         short shorts[3];
 
         myFile.seekg(2, ios::cur);
-    //lee length
+        //lee length
 
         myFile.read((char*) shorts, 2);
         len = shorts[0];
         // cout << "len antes de cambiar: " << len << endl;
         len = ntohs(len);
         // cout << "len dsp de cambiar: " << len << endl;
-
-    //    lee id
+        data_len = len - HEADER;
+        //    lee id
         unsigned char id_buff[2];
         myFile.read((char*) id_buff, 2);
         string id = hex_converter(id_buff, 2);
@@ -91,8 +88,6 @@ int Sniffer::create_packets(){
         // myFile.seekg(12);
         myFile.seekg(4, ios::cur);
 
-
-
         unsigned char buff[5];
         buff[4] = '\0';
         myFile.read((char*)buff, 4);
@@ -106,12 +101,12 @@ int Sniffer::create_packets(){
 
 
         // myFile.seekg(HEADER);
-        myFile.read((char*)buffer, len-HEADER);
+        myFile.read((char*)buffer, data_len);
 
     //    for (int i = 0; i < 10; ++i) {
     //        printf("%x ", buffer[i]);
     //    }
-        string str = hex_converter(buffer, len-HEADER);
+        string str = hex_converter(buffer, data_len);
 
         Packet p = Packet(id,src,dst);
         p.setData(str);
