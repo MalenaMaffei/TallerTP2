@@ -1,6 +1,3 @@
-//
-// Created by male on 08/04/17.
-//
 #include <iostream>
 #include <sstream>
 #include <ios>
@@ -23,8 +20,6 @@ using std::ios;
 using std::ifstream;
 using std::cout;
 using std::vector;
-
-
 
 Sniffer::Sniffer(const string &filename) : filename(filename) {
     this->filename = filename;
@@ -67,6 +62,8 @@ int Sniffer::create_packets(){
     //    lee offset
     unsigned char fo[2];
     myFile.read((char*) fo, 2);
+    // fo[0] = 0xaa;
+    // fo[1] = 0xaa;
     unsigned char flag = fo[0];
     // flag parece estar bien, re chequear despues
     printf("\nEl orig flag 0x%x\n",flag);
@@ -77,7 +74,12 @@ int Sniffer::create_packets(){
     fo[0] <<= 3;
     fo[0] >>= 3;
     printf("El shift off 0x%x 0x%x\n",fo[0], fo[1]);
-    //ignora 4 bytes
+
+    short* offset_ptr = (short*) fo;
+    short offset = *offset_ptr;
+    offset = ntohs(offset);
+    cout << "offset guardado: " << offset << endl;
+        //ignora 4 bytes
     myFile.seekg(12);
 
 
