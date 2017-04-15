@@ -15,7 +15,7 @@ using std::cout;
 
 int main(int argc, char ** argv){
     if (argc < 3)
-        return 0;
+        return 1;
 
 //    vector<string> words = {"hello", "world", "caca"};
 //    Rule r = Rule("0", "1",0,"always",words,0);
