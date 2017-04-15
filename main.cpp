@@ -18,20 +18,24 @@ int main(int argc, char ** argv){
 //        return 0;
 
 //    vector<string> words = {"hello", "world", "caca"};
-//    Rule r = Rule("0", "1",0,"always",words);
-//    r.checkWords("hola hola world");
+//    Rule r = Rule("0", "1",0,"always",words,0);
+//    r.checkData("hola ld");
 //    cout << "primer palabra: " << r.getMatches()[0]<<endl;
 //    cout << "segunda: " << r.getMatches()[1] << endl;
 //    cout << "tercera: " << r.getMatches()[2] << endl;
+//    cout << "ocurrencia? " << r.getOccurrences() << endl;
 
     vector<Packet> packets;
     string conf = argv[1];
     string file = argv[2];
     Detector d = Detector(conf, packets);
 
-//    Sniffer sniff = Sniffer(file, packets);
+
+
+
+    Sniffer sniff = Sniffer(file, packets);
 //    // Sniffer sniffB = Sniffer(file, packets);
-//    sniff.create_packets();
+    sniff.create_packets();
 //    // sniffB.create_packets();
 //    int i = packets.size();
 //    cout << "elementos: " << i << endl;
@@ -41,6 +45,8 @@ int main(int argc, char ** argv){
 //        cout << "id: " << p.getId() << " src: " << p.getSrc() << " dst: " << p.getDst() << endl;
 //        cout << "data sacada del p"<< j<<": " << s << "\n\n";
 //    }
+
+    d.detect();
 
     return 0;
 }

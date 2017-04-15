@@ -12,7 +12,8 @@ using std::vector;
 class Detector {
 public:
     Detector(const string &conf, vector<Packet> &pkts);
-    void createRule(vector<string> &params);
+    void createRule(vector<string> &params, int id);
+    void detect();
 
 private:
     string conf;

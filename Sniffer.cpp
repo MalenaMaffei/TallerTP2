@@ -25,14 +25,42 @@ Sniffer::~Sniffer() {
 //nada por aca
 }
 
-string hex_converter(unsigned char* buffer, size_t len){
+string hex_data_converter(unsigned char* buffer, size_t len){
     std::ostringstream dst;
-    dst << std::hex << std::setfill('0');
+//    dst << std::hex << std::setfill('0');
+    dst << std::hex;
+//    dst << std::hex;
+
     for (size_t i = 0; i < len; ++i) {
-        dst << std::setw(2) << static_cast<int>(buffer[i]);
+//        dst << std::setw(2) << static_cast<int>(buffer[i]);
+        dst << static_cast<int>(buffer[i]);
+
         if (i<len-1){ dst << " ";}
     }
     string dst1 = dst.str();
+//    std::cout << "\nhex obtenido: " << dst1 << "\n";
+    return dst1;
+}
+
+string hex_num_converter(unsigned char* buffer, size_t len){
+    std::ostringstream dst;
+    dst << std::hex << std::setfill('0');
+
+    for (size_t i = 0; i < len; ++i) {
+
+        dst << std::setw(2) << static_cast<int>(buffer[i]);
+    }
+    string dst1 = dst.str();
+    dst1.erase(0, std::min(dst1.find_first_not_of('0'), dst1.size()-1));
+//    int i_num = std::stoi(dst1);
+//
+//    std::ostringstream final;
+//    final << std::hex;
+//    final << std::setw(2) << (i_num);
+//
+//    string num = final.str();
+
+
 //    std::cout << "\nhex obtenido: " << dst1 << "\n";
     return dst1;
 }
@@ -60,7 +88,7 @@ int Sniffer::create_packets(){
         //    lee id
         unsigned char id_buff[2];
         myFile.read((char*) id_buff, 2);
-        string id = hex_converter(id_buff, 2);
+        string id = hex_num_converter(id_buff, 2);
     //    printf("id original: %x %x\n", id_buff[0], id_buff[1]);
 
 
@@ -91,11 +119,11 @@ int Sniffer::create_packets(){
         unsigned char buff[5];
         buff[4] = '\0';
         myFile.read((char*)buff, 4);
-        string src = hex_converter(buff, 4);
+        string src = hex_num_converter(buff, 4);
     //    printf("src or 0x%x 0x%x 0x%x 0x%x\n", buff[0], buff[1], buff[2], buff[3]);
 
         myFile.read((char*)buff, 4);
-        string dst = hex_converter(buff, 4);
+        string dst = hex_num_converter(buff, 4);
     //    printf("dst or 0x%x 0x%x 0x%x 0x%x\n", buff[0], buff[1], buff[2], buff[3]);
 
         myFile.read((char*)buffer, data_len);
@@ -103,10 +131,10 @@ int Sniffer::create_packets(){
     //    for (int i = 0; i < 10; ++i) {
     //        printf("%x ", buffer[i]);
     //    }
-        string str = hex_converter(buffer, data_len);
+        string data = hex_data_converter(buffer, data_len);
 
         Packet p = Packet(id,src,dst);
-        p.setData(str);
+        p.setData(data);
 
         this->packets.push_back(p);
     }
