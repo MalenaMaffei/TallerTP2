@@ -53,7 +53,6 @@ void hex_conv(string & str){
     }
 
     str = dst.str();
-
 }
 
 void print(string s){
@@ -65,9 +64,9 @@ void Detector::createRule(vector<string> &params, int id) {
 //    int i_src, i_dst;
     size_t threshold;
     keyword = params[KEYWORD];
-    params.erase (params.begin() + KEYWORD);
+    params.erase(params.begin() + KEYWORD);
     threshold = std::stoi(params[THRESHOLD]);
-    params.erase (params.begin() + THRESHOLD);
+    params.erase(params.begin() + THRESHOLD);
 
 
     src = params.front();
@@ -150,7 +149,6 @@ Detector::Detector(const string &conf, vector<Packet> &pkts) :
     }
 
 //    cout << "reglas: " << rules.size() << endl;
-
 }
 
 void Detector::detect(){

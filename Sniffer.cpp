@@ -6,7 +6,7 @@
 #include <fstream>
 #include "Sniffer.h"
 #include <netinet/in.h>
-
+#include <algorithm>
 #define HEADER 20
 
 using std::string;
@@ -16,7 +16,8 @@ using std::ifstream;
 using std::cout;
 using std::vector;
 
-Sniffer::Sniffer(const string &file, vector<Packet> &pkts) : file(file), packets(pkts) {
+Sniffer::Sniffer(const string &file, vector<Packet> &pkts) :
+        file(file), packets(pkts) {
     this->file = file;
     this->packets = packets;
 }
@@ -47,7 +48,6 @@ string hex_num_converter(unsigned char* buffer, size_t len){
     dst << std::hex << std::setfill('0');
 
     for (size_t i = 0; i < len; ++i) {
-
         dst << std::setw(2) << static_cast<int>(buffer[i]);
     }
     string dst1 = dst.str();
@@ -120,11 +120,9 @@ int Sniffer::create_packets(){
         buff[4] = '\0';
         myFile.read((char*)buff, 4);
         string src = hex_num_converter(buff, 4);
-    //    printf("src or 0x%x 0x%x 0x%x 0x%x\n", buff[0], buff[1], buff[2], buff[3]);
 
         myFile.read((char*)buff, 4);
         string dst = hex_num_converter(buff, 4);
-    //    printf("dst or 0x%x 0x%x 0x%x 0x%x\n", buff[0], buff[1], buff[2], buff[3]);
 
         myFile.read((char*)buffer, data_len);
 

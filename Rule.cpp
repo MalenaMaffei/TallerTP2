@@ -18,7 +18,7 @@ using std::for_each;
 
 Rule::Rule(const string &src, const string &dst, size_t threshold,
            const string &keyword, const vector<string> &words, size_t id):
-src (src), dst(dst), threshold(threshold), keyword(keyword), words(words) {
+src(src), dst(dst), threshold(threshold), keyword(keyword), words(words) {
     this->dst = dst;
     this->src = src;
     this->keyword = keyword;
@@ -56,9 +56,11 @@ void Rule::checkPacket(Packet packet){
     }
 
 //    cout << "mi src: " << src << " la del paq: " << packet.getSrc() << endl;
-//    cout << "son iguales?: " << (src == packet.getSrc()) << "matched dice:" << match_src << endl;
+//    cout << "son iguales?: " << (src == packet.getSrc()) ;
+// cout << "matched dice:" << match_src << endl;
 //    cout << "mi dst: " << dst << " la del paq: " << packet.getDst() << endl;
-//    cout << "son iguales?: " << (dst == packet.getDst()) << "matched dice:" << match_dst << endl;
+//    cout << "son iguales?: " << (dst == packet.getDst()) << "matched dice:";
+// cout<< match_dst << endl;
 //    cout << endl;
 
     if (match_dst && match_src){
@@ -109,7 +111,6 @@ void Rule::checkData(string data) {
 
     bool is_match = matches[0];
     if (keyword == "all"){
-
         for (int i = 0; i < matches.size(); ++i) {
             is_match = is_match && matches[i];
         }
@@ -119,7 +120,6 @@ void Rule::checkData(string data) {
             triggered = true;
         }
     } else if (keyword == "any"){
-
         for (int i = 0; i < matches.size(); ++i) {
             is_match = is_match || matches[i];
         }
@@ -131,7 +131,8 @@ void Rule::checkData(string data) {
     }
 
 //    cout << "ocurencias: " << occurrences << endl;
-//    cout << "tengo: " << words.size() << " palabras y " << matches.size() << " matches" << endl;
+//    cout << "tengo: " << words.size() << " palabras y ";
+// cout<< matches.size() << " matches" << endl;
 //    for_each(matches.begin(), matches.end(), print);
 //    cout <<endl;
 }

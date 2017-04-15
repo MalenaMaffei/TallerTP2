@@ -30,5 +30,4 @@ private:
     vector<bool> matches;
     size_t occurrences;
     bool triggered;
-
 };

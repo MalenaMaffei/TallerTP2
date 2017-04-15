@@ -14,13 +14,17 @@ echo
 echo "-----------------prueba 5------------------"
 ./tp tests/t5/elite_4_or_more.cfg tests/t5/elite.cap | diff tests/t5/__stdout__ -
 echo "-----------------prueba 6------------------"
+echo "no"
 #./tp tests/t6/spoon.cfg tests/t6/packet_fragmented.cap | diff tests/t6/__stdout__ -
 echo
 echo "-----------------prueba 7------------------"
+echo "no"
 #./tp tests/t7/spoon.cfg tests/t7/packet_fragmented.cap | diff tests/t7/__stdout__ -
 echo
 echo "-----------------prueba 8------------------"
+echo "no"
 #./tp tests/t8/rules.cfg tests/t8/packets.cap | diff tests/t8/__stdout__ -
 echo
 echo "-----------------prueba 9------------------"
+echo "no"
 #./tp tests/t9/spoon.cfg tests/t9/cap0.cap tests/t9/cap1.cap tests/t9/cap2.cap tests/t9/cap3.cap tests/t9/cap4.cap | diff tests/t9/__stdout__ -
