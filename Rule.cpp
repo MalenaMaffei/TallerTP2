@@ -102,7 +102,7 @@ void Rule::checkData(string data) {
 //    for_each(words.begin(), words.end(), findWord);
 
     vector<bool> matches;
-    for (int i = 0; i < words.size(); ++i) {
+    for (size_t i = 0; i < words.size(); ++i) {
 //        cout << "comparando: " <<endl;
 //        cout << "data de paquete: " << data <<endl;
 //        cout << "palabra : " << words[i] << endl;
@@ -111,7 +111,7 @@ void Rule::checkData(string data) {
 
     bool is_match = matches[0];
     if (keyword == "all"){
-        for (int i = 0; i < matches.size(); ++i) {
+        for (size_t i = 0; i < matches.size(); ++i) {
             is_match = is_match && matches[i];
         }
 //        is_match = matches[0];
@@ -120,7 +120,7 @@ void Rule::checkData(string data) {
             triggered = true;
         }
     } else if (keyword == "any"){
-        for (int i = 0; i < matches.size(); ++i) {
+        for (size_t i = 0; i < matches.size(); ++i) {
             is_match = is_match || matches[i];
         }
 //        is_match = matches[0];

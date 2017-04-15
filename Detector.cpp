@@ -152,9 +152,9 @@ Detector::Detector(const string &conf, vector<Packet> &pkts) :
 }
 
 void Detector::detect(){
-    for (int i = 0; i < packets.size(); ++i) {
+    for (size_t i = 0; i < packets.size(); ++i) {
         Packet p = packets[i];
-        for (int j = 0; j < rules.size(); ++j) {
+        for (size_t j = 0; j < rules.size(); ++j) {
             rules[j].checkPacket(p);
         }
     }
