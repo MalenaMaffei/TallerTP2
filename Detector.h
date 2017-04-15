@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include "Packet.h"
-#include "Rules.h"
+#include "Rule.h"
 
 using std::string;
 using std::vector;
@@ -12,10 +12,12 @@ using std::vector;
 class Detector {
 public:
     Detector(const string &conf, vector<Packet> &pkts);
+    void createRule(vector<string> &params);
+
 private:
     string conf;
     vector<Packet> & packets;
-    vector<Rules> rules;
+    vector<Rule> rules;
 };
 
 

@@ -22,4 +22,4 @@ echo "-----------------prueba 8------------------"
 ./tp tests/t8/rules.cfg tests/t8/packets.cap
 echo
 echo "-----------------prueba 9------------------"
-./tp tests/t9spoon.cfg tests/t9/cap0.cap tests/t9/cap1.cap tests/t9/cap2.cap tests/t9/cap3.cap tests/t9/cap4.cap
+./tp tests/t9/spoon.cfg tests/t9/cap0.cap tests/t9/cap1.cap tests/t9/cap2.cap tests/t9/cap3.cap tests/t9/cap4.cap
