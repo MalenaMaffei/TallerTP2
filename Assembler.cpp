@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Assembler.h"
 #include <algorithm>
+#include <vector>
 
 using std::sort;
 using std::cout;
@@ -55,5 +56,4 @@ void Assembler::assemble(){
 //    cout << "me quedo: " << first.getData() << std::endl;
 
     packets.push_back(first);
-
 }

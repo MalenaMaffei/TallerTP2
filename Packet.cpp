@@ -2,8 +2,8 @@
 #include <iostream>
 #include "Packet.h"
 // TODO implementar tema de flags y offsets
-Packet::Packet(string id, string src, string dst, unsigned char flag, short offset,
-               short len) {
+Packet::Packet(string id, string src, string dst, unsigned char flag,
+               short offset, short len) {
     this->id = id;
     this->src = src;
     this->dst = dst;

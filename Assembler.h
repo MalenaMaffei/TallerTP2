@@ -9,12 +9,11 @@ using std::vector;
 
 class Assembler {
 public:
-    Assembler(vector<Packet> &packets);
+    explicit Assembler(vector<Packet> &packets);
     void assemble();
 
 private:
     vector<Packet> & packets;
-
 };
 
 
