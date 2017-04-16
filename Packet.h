@@ -54,6 +54,10 @@ public:
     bool is_next(const Packet& other);
 
     int mergePacket(const Packet& nextPacket);
+
+    short getOffset() const;
+
+    unsigned char getFlag() const;
 };
 
 

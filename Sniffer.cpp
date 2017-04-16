@@ -99,15 +99,16 @@ int Sniffer::create_packets(){
         // fo[1] = 0xaa;
         unsigned char flag = fo[0];
         // flag parece estar bien, re chequear despues
-    //    printf("\nEl orig flag 0x%x\n",flag);
+//        printf("\nEl orig flag 0x%x\n",flag);
         flag <<= 2;
         flag >>= 7;
-    //    printf("El shift flag 0x%x\n",flag);
-    //    printf("\nEl orig off 0x%x 0x%x\n",fo[0], fo[1]);
+//        printf("El shift flag 0x%x\n",flag);
+//        printf("El int flag %i\n",flag);
+
+        //    printf("\nEl orig off 0x%x 0x%x\n",fo[0], fo[1]);
         fo[0] <<= 3;
         fo[0] >>= 3;
-    //    printf("El shift off 0x%x 0x%x\n",fo[0], fo[1]);
-
+//        printf("El shift off 0x%x 0x%x\n",fo[0], fo[1]);
         short* offset_ptr = (short*) fo;
         short offset = *offset_ptr;
         offset = ntohs(offset);
@@ -115,7 +116,6 @@ int Sniffer::create_packets(){
             //ignora 4 bytes
         // myFile.seekg(12);
         myFile.seekg(4, ios::cur);
-
 
 
         unsigned char buff[5];

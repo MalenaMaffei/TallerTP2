@@ -82,7 +82,7 @@ int Packet::mergePacket(const Packet& nextPacket ){
     if (!is_next(nextPacket)){ return -1; }
     string first_data = this->data;
     string next_data = nextPacket.data;
-    string complete_data = first_data + next_data;
+    string complete_data = first_data + " " + next_data;
     this->data = complete_data;
     this->len += nextPacket.len;
     this->flag = nextPacket.flag;
@@ -90,4 +90,12 @@ int Packet::mergePacket(const Packet& nextPacket ){
         complete = true;
     }
     return 0;
+}
+
+short Packet::getOffset() const {
+    return offset;
+}
+
+unsigned char Packet::getFlag() const {
+    return flag;
 }

@@ -15,8 +15,8 @@ using std::ifstream;
 using std::cout;
 
 int main(int argc, char ** argv){
-//    if (argc < 3)
-//        return 1;
+    if (argc < 3)
+        return 1;
 
 //    vector<string> words = {"hello", "world", "caca"};
 //    Rule r = Rule("0", "1",0,"always",words,0);
@@ -28,15 +28,36 @@ int main(int argc, char ** argv){
 
 
 
-//    vector<Packet> packets;
-//    string conf = argv[1];
-//    string file = argv[2];
-//    Detector d = Detector(conf, packets);
+    vector<Packet> packets;
+    string conf = argv[1];
+    string file = argv[2];
+    Detector d = Detector(conf, packets);
+    Assembler a = Assembler(packets);
 
 
+    Sniffer sniff = Sniffer(file, packets);
+    sniff.create_packets();
 
+//    cout << "se generaron: " << packets.size() << "paquetes" << endl;
+//    for (int j = 0; j < packets.size(); ++j) {
+//        cout << "id: " << packets[j].getId() << endl;
+//        cout << "src: " << packets[j].getSrc() << endl;
+//        cout << "dst: " << packets[j].getDst() << endl;
+//        cout << "flag: " << (int)packets[j].getFlag() << endl;
+//        cout << "offset: " << packets[j].getOffset() << endl;
+//        cout << "len: " << packets[j].getLength() << endl;
+//        std::cout << "data: " << packets[j].getData() << std::endl;
+//        cout << endl;
+//    }
 
-//    Sniffer sniff = Sniffer(file, packets);
+    a.assemble();
+
+//    cout << "quedaron: " << packets.size() << endl;
+//    for (int j = 0; j < packets.size(); ++j) {
+//        std::cout << " quedaron data: " << packets[j].getData() << std::endl;
+//    }
+
+    d.detect();
 
 //    // Sniffer sniffB = Sniffer(file, packets);
 
@@ -51,43 +72,43 @@ int main(int argc, char ** argv){
 //        cout << "data sacada del p"<< j<<": " << s << "\n\n";
 //    }
 
-//    d.detect();
+//
 
-    Packet p1 = Packet("0", "1", "2", 0x1, 0, 1);
-    Packet p2 = Packet("0", "1", "2", 0x1, 1, 1);
-    Packet p3 = Packet("0", "1", "2", 0x1, 2, 1);
-    Packet p4 = Packet("0", "1", "2", 0x0, 3, 1);
+//    Packet p1 = Packet("0", "1", "2", 0x1, 0, 1);
+//    Packet p2 = Packet("0", "1", "2", 0x1, 1, 1);
+//    Packet p3 = Packet("0", "1", "2", 0x1, 2, 1);
+//    Packet p4 = Packet("0", "1", "2", 0x0, 3, 1);
+//
+//    p1.setData("hola");
+//    p2.setData("que");
+//    p3.setData("tal");
+//    p4.setData("?");
+//
+//
+//    Packet diff = Packet("0", "1", "3", 0x0, 0, 4);
+//    diff.setData("diff");
+//
+//    vector<Packet> packets;
+//    packets.push_back(p1);
+//    packets.push_back(p2);
+//    packets.push_back(p3);
+//    packets.push_back(diff);
+//    packets.push_back(p4);
 
-    p1.setData("hola");
-    p2.setData("que");
-    p3.setData("tal");
-    p4.setData("?");
 
 
-    Packet diff = Packet("0", "1", "3", 0x0, 0, 4);
-    diff.setData("diff");
-
-    vector<Packet> packets;
-    packets.push_back(p1);
-    packets.push_back(p2);
-    packets.push_back(p3);
-    packets.push_back(diff);
-    packets.push_back(p4);
 
 
-    Assembler a = Assembler(packets);
-
-    a.assemble();
 
 //    cout << "p2 next de p1: " << p1.is_next(p2) << endl;
 //    cout << "p3 next de p2: " << p2.is_next(p3) << endl;
 //    cout << "p4 next de p3: " << p3.is_next(p4) << endl;
 
-    for (int j = 0; j < packets.size(); ++j) {
-        std::cout << " quedaron data: " << packets[j].getData() << std::endl;
-    }
-
-    cout << "data ultimo: " << packets.back().getData() << endl;
+//    for (int j = 0; j < packets.size(); ++j) {
+//        std::cout << " quedaron data: " << packets[j].getData() << std::endl;
+//    }
+//
+//    cout << "data ultimo: " << packets.back().getData() << endl;
 
 //    cout << "el p1 es completo?: " << p1.is_complete() << endl;
 //    cout << "el diff es completo?: " << diff.is_complete() << endl;
