@@ -10,7 +10,7 @@
 
 #define KEYWORD 3
 #define THRESHOLD 2
-#define DUMMY_ID 0
+
 using std::string;
 using std::endl;
 using std::ios;

@@ -116,6 +116,8 @@ int Sniffer::create_packets(){
         // myFile.seekg(12);
         myFile.seekg(4, ios::cur);
 
+
+
         unsigned char buff[5];
         buff[4] = '\0';
         myFile.read((char*)buff, 4);
@@ -124,6 +126,8 @@ int Sniffer::create_packets(){
         myFile.read((char*)buff, 4);
         string dst = hex_num_converter(buff, 4);
 
+
+        //        TODO MALLOC Y CHEQUEAR SI HAY DATA
         myFile.read((char*)buffer, data_len);
 
     //    for (int i = 0; i < 10; ++i) {
@@ -131,7 +135,7 @@ int Sniffer::create_packets(){
     //    }
         string data = hex_data_converter(buffer, data_len);
 
-        Packet p = Packet(id,src,dst);
+        Packet p = Packet(id, src, dst, flag, offset, data_len);
         p.setData(data);
 
         this->packets.push_back(p);

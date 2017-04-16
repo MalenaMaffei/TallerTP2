@@ -1,11 +1,17 @@
 #include <string>
 #include "Packet.h"
 // TODO implementar tema de flags y offsets
-Packet::Packet(string id, string src, string dst) {
+Packet::Packet(string id, string src, string dst, unsigned char flag, short offset,
+               short len) {
     this->id = id;
     this->src = src;
     this->dst = dst;
     this->data = "";
+    this->flag = flag;
+    this->offset = offset;
+    this->len = len;
+
+    complete = (offset == 0 && flag ==0);
 }
 
 Packet::~Packet() {
@@ -38,4 +44,31 @@ const bool Packet::is_complete() const {
 
 void Packet::setData(const string &data) {
     Packet::data = data;
+}
+
+bool Packet::operator==(const Packet& other) const{
+    bool match_src = this->src == other.src;
+    bool match_dst = this->dst == other.dst;
+    bool match_id = this->id == other.id;
+    return match_dst && match_src && match_id;
+}
+
+bool Packet::operator>(const Packet& other) const{
+//el mayor es el ultimo
+    return offset > other.offset;
+}
+
+bool Packet::operator<(const Packet& other) const{
+//el mayor es el ultimo
+    return offset < other.offset;
+}
+
+int Packet::mergePacket(const Packet& nextPacket ){
+    //ver como chequear error y devolver -1 si no estan en orden
+    string first_data = this->data;
+    string next_data = nextPacket.data;
+    string complete_data = first_data + next_data;
+    this->data = complete_data;
+    this->len += nextPacket.len;
+    return 0;
 }
