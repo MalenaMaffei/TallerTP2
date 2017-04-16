@@ -47,6 +47,12 @@ public:
 
     bool operator<(const Packet& other) const;
 
+    bool is_first() const;
+
+    bool is_last() const;
+
+    bool is_next(const Packet& other);
+
     int mergePacket(const Packet& nextPacket);
 };
 

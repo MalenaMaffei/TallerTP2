@@ -1,4 +1,5 @@
 #include <string>
+#include <iostream>
 #include "Packet.h"
 // TODO implementar tema de flags y offsets
 Packet::Packet(string id, string src, string dst, unsigned char flag, short offset,
@@ -63,12 +64,30 @@ bool Packet::operator<(const Packet& other) const{
     return offset < other.offset;
 }
 
+bool Packet::is_first() const{
+    return offset == 0;
+}
+
+bool Packet::is_last() const{
+    return flag == 0;
+}
+
+bool Packet::is_next(const Packet& other){
+//    std::cout << "off + len: " << offset + len <<std::endl;
+//    std::cout << "otro off: " << other.offset << std::endl;
+    return (offset + len) == other.offset;
+}
+
 int Packet::mergePacket(const Packet& nextPacket ){
-    //ver como chequear error y devolver -1 si no estan en orden
+    if (!is_next(nextPacket)){ return -1; }
     string first_data = this->data;
     string next_data = nextPacket.data;
     string complete_data = first_data + next_data;
     this->data = complete_data;
     this->len += nextPacket.len;
+    this->flag = nextPacket.flag;
+    if (is_first() && nextPacket.is_last()){
+        complete = true;
+    }
     return 0;
 }

@@ -7,6 +7,7 @@
 //#include "Rule.h"
 #include <fstream>
 #include <vector>
+#include "Assembler.h"
 using std::string;
 using std::endl;
 using std::ios;
@@ -53,9 +54,9 @@ int main(int argc, char ** argv){
 //    d.detect();
 
     Packet p1 = Packet("0", "1", "2", 0x1, 0, 1);
-    Packet p2 = Packet("0", "1", "2", 0x1, 2, 1);
-    Packet p3 = Packet("0", "1", "2", 0x1, 3, 1);
-    Packet p4 = Packet("0", "1", "2", 0x0, 4, 1);
+    Packet p2 = Packet("0", "1", "2", 0x1, 1, 1);
+    Packet p3 = Packet("0", "1", "2", 0x1, 2, 1);
+    Packet p4 = Packet("0", "1", "2", 0x0, 3, 1);
 
     p1.setData("hola");
     p2.setData("que");
@@ -64,6 +65,29 @@ int main(int argc, char ** argv){
 
 
     Packet diff = Packet("0", "1", "3", 0x0, 0, 4);
+    diff.setData("diff");
+
+    vector<Packet> packets;
+    packets.push_back(p1);
+    packets.push_back(p2);
+    packets.push_back(p3);
+    packets.push_back(diff);
+    packets.push_back(p4);
+
+
+    Assembler a = Assembler(packets);
+
+    a.assemble();
+
+//    cout << "p2 next de p1: " << p1.is_next(p2) << endl;
+//    cout << "p3 next de p2: " << p2.is_next(p3) << endl;
+//    cout << "p4 next de p3: " << p3.is_next(p4) << endl;
+
+    for (int j = 0; j < packets.size(); ++j) {
+        std::cout << " quedaron data: " << packets[j].getData() << std::endl;
+    }
+
+    cout << "data ultimo: " << packets.back().getData() << endl;
 
 //    cout << "el p1 es completo?: " << p1.is_complete() << endl;
 //    cout << "el diff es completo?: " << diff.is_complete() << endl;
@@ -89,15 +113,19 @@ int main(int argc, char ** argv){
 //    cout << "p2 > p3?: " << (p2 > p3) << endl;
 //    cout << "p2 < p3?: " << (p2 < p3) << endl;
 
-    cout << "p1 data: " << p1.getData() << endl;
-    p1.mergePacket(p2);
-    cout << "p1 + p2 data: " << p1.getData() << endl;
-
-    p3.mergePacket(p4);
-    cout << "p3 + p4 data: " << p3.getData() << endl;
-
-    p1.mergePacket(p3);
-    cout << "p1 + p2 + p3 + p4 data: " << p1.getData() << endl;
+//    cout << "p1 data: " << p1.getData() << endl;
+//    p1.mergePacket(p2);
+//    cout << "p1 + p2 data: " << p1.getData() << endl;
+//    cout << "p1 completo?: " << p1.is_complete() << endl;
+//
+//    p3.mergePacket(p4);
+//    cout << "p3 + p4 data: " << p3.getData() << endl;
+//    cout << "p3 completo?: " << p3.is_complete() << endl;
+//
+//    p1.mergePacket(p3);
+//    cout << "p1 + p2 + p3 + p4 data: " << p1.getData() << endl;
+//    cout << "p1 completo?: " << p1.is_complete() << endl;
+//    cout << "p1 len: " << p1.getLength() << endl;
 
     return 0;
 }
