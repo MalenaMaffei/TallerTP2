@@ -7,4 +7,4 @@ tp.dSYM
 .DS_Store
 tags
 vgcore.*
-.zip
+*.zip
