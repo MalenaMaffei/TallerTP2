@@ -46,7 +46,7 @@ int main(int argc, char ** argv){
 //        cout << "flag: " << (int)packets[j].getFlag() << endl;
 //        cout << "offset: " << packets[j].getOffset() << endl;
 //        cout << "len: " << packets[j].getLength() << endl;
-//        std::cout << "data: " << packets[j].getData() << std::endl;
+////        std::cout << "data: " << packets[j].getData() << std::endl;
 //        cout << endl;
 //    }
 
@@ -54,10 +54,22 @@ int main(int argc, char ** argv){
 
 //    cout << "quedaron: " << packets.size() << endl;
 //    for (int j = 0; j < packets.size(); ++j) {
-//        std::cout << " quedaron data: " << packets[j].getData() << std::endl;
+//        cout << "id: " << packets[j].getId() << endl;
+//        cout << "src: " << packets[j].getSrc() << endl;
+//        cout << "dst: " << packets[j].getDst() << endl;
+//        cout << "flag: " << (int)packets[j].getFlag() << endl;
+//        cout << "offset: " << packets[j].getOffset() << endl;
+//        cout << "len: " << packets[j].getLength() << endl;
+//        cout << endl;
 //    }
 
-    d.detect();
+    int i = packets.size();
+    for (int k = 0; k < i; ++k) {
+        d.detect();
+    }
+//    cout << "quedaron: " << packets.size() << endl;
+
+//    d.detect();
 
 //    // Sniffer sniffB = Sniffer(file, packets);
 

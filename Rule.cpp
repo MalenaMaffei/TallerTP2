@@ -49,12 +49,12 @@ void Rule::checkPacket(Packet packet){
         match_src = true;
     }
 
-    if (src != "0"){
+    if (dst != "0"){
         match_dst = (dst == packet.getDst());
     } else {
         match_dst = true;
     }
-
+//
 //    cout << "mi src: " << src << " la del paq: " << packet.getSrc() << endl;
 //    cout << "son iguales?: " << (src == packet.getSrc()) ;
 // cout << "matched dice:" << match_src << endl;

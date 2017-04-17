@@ -30,7 +30,7 @@ void Assembler::assemble(){
 //        cout << "flag: " << (int)fragments[j].getFlag() << endl;
 //        cout << "offset: " << fragments[j].getOffset() << endl;
 //        cout << "len: " << fragments[j].getLength() << endl;
-//        std::cout << "data: " << fragments[j].getData() << std::endl;
+////        std::cout << "data: " << fragments[j].getData() << std::endl;
 //        cout << endl;
 //    }
 

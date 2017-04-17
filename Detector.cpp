@@ -152,10 +152,11 @@ Detector::Detector(const string &conf, vector<Packet> &pkts) :
 }
 
 void Detector::detect(){
-    for (size_t i = 0; i < packets.size(); ++i) {
-        Packet p = packets[i];
-        for (size_t j = 0; j < rules.size(); ++j) {
+    Packet p = packets.back();
+    if (!p.is_complete()){return;}
+    for (size_t j = 0; j < rules.size(); ++j) {
             rules[j].checkPacket(p);
-        }
     }
+    packets.pop_back();
+
 }
