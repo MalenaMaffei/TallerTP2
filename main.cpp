@@ -8,6 +8,7 @@
 #include <fstream>
 #include <vector>
 #include "Assembler.h"
+#include <algorithm>
 using std::string;
 using std::endl;
 using std::ios;
@@ -29,18 +30,31 @@ int main(int argc, char ** argv){
 
 
     vector<Packet> packets;
+    vector<string> captures;
+    vector<Sniffer> sniffers;
     string conf = argv[1];
-    string file = argv[2];
+//    string file = argv[2];
+
+    for (int i = 2; i < argc; ++i) {
+        string parametro = argv[i];
+        captures.push_back(parametro);
+    }
     Detector d = Detector(conf, packets);
     Assembler a = Assembler(packets);
 
+    std::for_each(captures.begin(), captures.end(), [&](string filename){
+        sniffers.push_back(Sniffer(filename, packets));
+    });
 
-    Sniffer sniff = Sniffer(file, packets);
-    while (!sniff.is_file_done()){
-        sniff.create_packets();
-        a.assemble();
-        d.detect();
-    }
+//    cout << "sniffers: " << sniffers.size()<<endl;
+//    Sniffer sniff = Sniffer(file, packets);
+    std::for_each(sniffers.begin(), sniffers.end(), [&](Sniffer sniff) {
+        while (!sniff.is_file_done()) {
+            sniff.create_packets();
+            a.assemble();
+            d.detect();
+        }
+    });
 
 
 //    cout << "se generaron: " << packets.size() << "paquetes" << endl;
