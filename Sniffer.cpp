@@ -21,6 +21,7 @@ Sniffer::Sniffer(const string &file, vector<Packet> &pkts) :
     this->filename = file;
     this->packets = packets;
     this->file_pos = 0;
+    ifstream hola;
 }
 
 Sniffer::~Sniffer() {
@@ -66,10 +67,11 @@ string hex_num_converter(unsigned char* buffer, size_t len){
     return dst1;
 }
 
-bool Sniffer::is_file_done(){
+bool Sniffer::is_file_done() const{
     ifstream file;
-    
-    return
+    file.open(Sniffer::filename, ios::in | ios::binary);
+    file.seekg(file_pos);
+    return file.peek() == EOF;
 }
 
 int Sniffer::create_packets(){
@@ -78,7 +80,8 @@ int Sniffer::create_packets(){
     file.open(Sniffer::filename, ios::in | ios::binary);
     file.seekg(file_pos);
 
-    while (file.peek() != EOF){
+
+//    while (file.peek() != EOF){
         short len;
         short data_len;
         unsigned char buffer[1050];
@@ -149,7 +152,7 @@ int Sniffer::create_packets(){
         this->packets.push_back(p);
 
         this->file_pos += len;
-    }
+//    }
 
     file.close();
 

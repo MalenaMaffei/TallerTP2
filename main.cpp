@@ -36,7 +36,12 @@ int main(int argc, char ** argv){
 
 
     Sniffer sniff = Sniffer(file, packets);
-    sniff.create_packets();
+    while (!sniff.is_file_done()){
+        sniff.create_packets();
+        a.assemble();
+        d.detect();
+    }
+
 
 //    cout << "se generaron: " << packets.size() << "paquetes" << endl;
 //    for (int j = 0; j < packets.size(); ++j) {
@@ -50,7 +55,7 @@ int main(int argc, char ** argv){
 //        cout << endl;
 //    }
 
-    a.assemble();
+
 
 //    cout << "quedaron: " << packets.size() << endl;
 //    for (int j = 0; j < packets.size(); ++j) {
@@ -63,10 +68,10 @@ int main(int argc, char ** argv){
 //        cout << endl;
 //    }
 
-    int i = packets.size();
-    for (int k = 0; k < i; ++k) {
-        d.detect();
-    }
+//    int i = packets.size();
+//    for (int k = 0; k < i; ++k) {
+//        d.detect();
+//    }
 //    cout << "quedaron: " << packets.size() << endl;
 
 //    d.detect();

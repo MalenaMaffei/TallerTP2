@@ -16,11 +16,13 @@ public:
     int create_packets();
 
     virtual ~Sniffer();
+    bool is_file_done() const;
 
 private:
     string filename;
     vector<Packet> & packets;
     int file_pos;
+//    ifstream file;
 };
 
 

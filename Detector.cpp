@@ -158,5 +158,4 @@ void Detector::detect(){
             rules[j].checkPacket(p);
     }
     packets.pop_back();
-
 }
