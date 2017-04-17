@@ -17,9 +17,10 @@ using std::cout;
 using std::vector;
 
 Sniffer::Sniffer(const string &file, vector<Packet> &pkts) :
-        file(file), packets(pkts) {
-    this->file = file;
+        filename(file), packets(pkts) {
+    this->filename = file;
     this->packets = packets;
+    this->file_pos = 0;
 }
 
 Sniffer::~Sniffer() {
@@ -66,20 +67,21 @@ string hex_num_converter(unsigned char* buffer, size_t len){
 }
 
 int Sniffer::create_packets(){
-    ifstream myFile;
+    ifstream file;
 
-    myFile.open(Sniffer::file, ios::in | ios::binary);
+    file.open(Sniffer::filename, ios::in | ios::binary);
+    file.seekg(file_pos);
 
-    while (myFile.peek() != EOF){
+    while (file.peek() != EOF){
         short len;
         short data_len;
         unsigned char buffer[1050];
         short shorts[3];
 
-        myFile.seekg(2, ios::cur);
+        file.seekg(2, ios::cur);
         //lee length
 
-        myFile.read((char*) shorts, 2);
+        file.read((char*) shorts, 2);
         len = shorts[0];
         // cout << "len antes de cambiar: " << len << endl;
         len = ntohs(len);
@@ -87,14 +89,14 @@ int Sniffer::create_packets(){
         data_len = len - HEADER;
         //    lee id
         unsigned char id_buff[2];
-        myFile.read((char*) id_buff, 2);
+        file.read((char*) id_buff, 2);
         string id = hex_num_converter(id_buff, 2);
     //    printf("id original: %x %x\n", id_buff[0], id_buff[1]);
 
 
         //    lee offset
         unsigned char fo[2];
-        myFile.read((char*) fo, 2);
+        file.read((char*) fo, 2);
         // fo[0] = 0xaa;
         // fo[1] = 0xaa;
         unsigned char flag = fo[0];
@@ -115,20 +117,20 @@ int Sniffer::create_packets(){
     //    cout << "offset guardado: " << offset << endl;
             //ignora 4 bytes
         // myFile.seekg(12);
-        myFile.seekg(4, ios::cur);
+        file.seekg(4, ios::cur);
 
 
         unsigned char buff[5];
         buff[4] = '\0';
-        myFile.read((char*)buff, 4);
+        file.read((char*)buff, 4);
         string src = hex_num_converter(buff, 4);
 
-        myFile.read((char*)buff, 4);
+        file.read((char*)buff, 4);
         string dst = hex_num_converter(buff, 4);
 
 
         //        TODO MALLOC Y CHEQUEAR SI HAY DATA
-        myFile.read((char*)buffer, data_len);
+        file.read((char*)buffer, data_len);
 
     //    for (int i = 0; i < 10; ++i) {
     //        printf("%x ", buffer[i]);

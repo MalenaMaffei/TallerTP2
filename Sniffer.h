@@ -3,10 +3,11 @@
 #include <string>
 #include <vector>
 #include "Packet.h"
+#include <iostream>
 
 using std::string;
 using std::vector;
-
+using std::ifstream;
 
 class Sniffer {
 public:
@@ -17,8 +18,9 @@ public:
     virtual ~Sniffer();
 
 private:
-    string file;
+    string filename;
     vector<Packet> & packets;
+    int file_pos;
 };
 
 
