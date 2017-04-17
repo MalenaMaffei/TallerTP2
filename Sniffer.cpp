@@ -66,6 +66,12 @@ string hex_num_converter(unsigned char* buffer, size_t len){
     return dst1;
 }
 
+bool Sniffer::is_file_done(){
+    ifstream file;
+    
+    return
+}
+
 int Sniffer::create_packets(){
     ifstream file;
 
@@ -141,7 +147,11 @@ int Sniffer::create_packets(){
         p.setData(data);
 
         this->packets.push_back(p);
+
+        this->file_pos += len;
     }
+
+    file.close();
 
     return 0;
 }
