@@ -5,25 +5,23 @@
 #include <vector>
 #include "Packet.h"
 #include "Rule.h"
-//#include "PacketContainer.h"
-
+//
 using std::string;
 using std::vector;
 
-class PacketContainer;
+//class PacketContainer;
 
 class Detector {
 public:
     explicit Detector(const string &conf);
     void createRule(vector<string> &params, int id);
     void detect(Packet packet);
+    ~Detector();
 
 private:
     string conf;
-//    PacketContainer &packets;
-//    vector<Packet> & packets;
-    vector<Rule> rules;
-//    std::mutex m;
+//    vector<Rule> rules;
+    std::vector<Rule*> rules;
 };
 
 

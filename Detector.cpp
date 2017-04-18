@@ -7,7 +7,10 @@
 #include <fstream>
 #include <algorithm>
 #include "Detector.h"
-
+#include "RuleAll.h"
+#include "RuleAny.h"
+#include "RuleAlways.h"
+#include "HexConverter.h"
 #define KEYWORD 3
 #define THRESHOLD 2
 
@@ -19,26 +22,22 @@ using std::cout;
 using std::vector;
 using std::for_each;
 
-void hex_conv(string & str){
-    std::ostringstream dst;
-    dst << std::hex;
-
-    for (string::size_type i = 0; i < str.length(); ++i) {
-        dst << static_cast<int>(str[i]);
-        if (i<str.length()-1){ dst << " ";}
-    }
-
-    str = dst.str();
+void format_string(string & str){
+    HexConverter converter;
+    converter.convertString(str);
 }
 
-void print(string s){
-    cout << s << endl;
+Detector::~Detector() {
+    for (size_t i = 0; i < rules.size(); ++i) {
+        delete rules[i];
+    }
 }
 
 void Detector::createRule(vector<string> &params, int id) {
     string src, dst, keyword;
-//    int i_src, i_dst;
     size_t threshold;
+
+
     keyword = params[KEYWORD];
     params.erase(params.begin() + KEYWORD);
     threshold = std::stoi(params[THRESHOLD]);
@@ -51,42 +50,34 @@ void Detector::createRule(vector<string> &params, int id) {
     dst = params.front();
     params.erase(params.begin());
 
-    for_each(params.begin(), params.end(), hex_conv);
+    for_each(params.begin(), params.end(), format_string);
 
     src.erase(0, std::min(src.find_first_not_of('0'), src.size()-1));
     dst.erase(0, std::min(dst.find_first_not_of('0'), dst.size()-1));
 
-//    cout << "Src: " << src <<endl;
-//    cout << "Src: " << dst <<endl;
-//    cout << "print lo que me quedo: " << endl;
-//    for_each(params.begin(), params.end(), print);
-//    for (int i = 0; i < params.size(); ++i) {
-//        params.[0] =
-//    }
 
-//    src = hex_conv(params[0]);
-//    dst = hex_conv(params[1]);
-
-
-
-    Rule r = Rule(src,dst,threshold,keyword,params,id);
-
-    rules.push_back(r);
+    Rule *ptr;
+    if (keyword == "all"){
+        ptr = new RuleAll(src,dst,threshold,params,id);
+    } else if (keyword == "any"){
+        ptr = new RuleAny(src,dst,threshold,params,id);
+    } else {
+        ptr = new RuleAlways(src, dst, threshold, params, id);
+    }
+    rules.push_back(ptr);
 }
 
 Detector::Detector(const string &conf) :
         conf(conf) {
-//    this->conf = conf;
-//    this->packets = packets;
-    string str;                      // This will store your tokens
+    string str;
     ifstream file(conf);
+
 
     std::ostringstream dst;
     int id = 0;
     while (file.peek() != EOF){
         getline(file, str, ';');
         if (str == "\n" || str == ""){ continue;}
-//        cout << "leido: " << str << endl;
         std::istringstream iss(str);
         vector<string> params;
 
@@ -94,8 +85,6 @@ Detector::Detector(const string &conf) :
             std::string sub;
             iss >> sub;
             if (sub == ""){ continue;}
-//            std::cout << "Substring: " << sub << std::endl;
-//            params.push_back(hex_conv(sub));
             params.push_back(sub);
         }
 
@@ -103,17 +92,10 @@ Detector::Detector(const string &conf) :
         getline(file, str);
         ++id;
     }
-
-//    cout << "reglas: " << rules.size() << endl;
 }
 
 void Detector::detect(Packet packet){
-//    std::lock_guard<std::mutex> lock(m);
-//    Packet p = packets.getLatest();
-//    if (!p.is_complete()){return;}
-
     for (size_t j = 0; j < rules.size(); ++j) {
-            rules[j].checkPacket(packet);
+            rules[j]->checkPacket(packet);
     }
-//    packets.popPacket();
 }

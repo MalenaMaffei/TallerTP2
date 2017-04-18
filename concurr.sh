@@ -1,4 +1,4 @@
-for i in {0..500};
+for i in {0..1000};
 do 
 
 ./tp tests/t1/always.cfg tests/t1/one.cap | diff tests/t1/__stdout__ -
