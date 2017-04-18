@@ -18,32 +18,8 @@ using std::ifstream;
 using std::cout;
 using std::vector;
 using std::for_each;
-//
-//string hex_conv(string & str){
-//    std::ostringstream dst;
-//    dst << std::hex << std::setfill('0');
-//
-//    for (string::size_type i = 0; i < str.length(); ++i) {
-//        dst << std::setw(2) << static_cast<int>(str[i]);
-//        if (i<str.length()-1){ dst << " ";}
-//    }
-//
-//    str = dst.str();
-//    std::cout << "\nhex obtenido: " << str << "\n";
-//    return str;
-//}
 
 void hex_conv(string & str){
-//    std::ostringstream dst;
-//    dst << std::hex << std::setfill('0');
-//
-//    for (string::size_type i = 0; i < str.length(); ++i) {
-//        dst << std::setw(2) << static_cast<int>(str[i]);
-//        if (i<str.length()-1){ dst << " ";}
-//    }
-//
-//    str = dst.str();
-
     std::ostringstream dst;
     dst << std::hex;
 
@@ -77,18 +53,6 @@ void Detector::createRule(vector<string> &params, int id) {
 
     for_each(params.begin(), params.end(), hex_conv);
 
-
-//    i_src = std::stoi(src, nullptr, 16);
-//    i_dst = std::stoi(dst, nullptr, 16);
-
-//    if (i_src == 0){
-//        src = "0";
-//    }
-//
-//    if (i_dst == 0){
-//        dst = "0";
-//    }
-
     src.erase(0, std::min(src.find_first_not_of('0'), src.size()-1));
     dst.erase(0, std::min(dst.find_first_not_of('0'), dst.size()-1));
 
@@ -110,10 +74,10 @@ void Detector::createRule(vector<string> &params, int id) {
     rules.push_back(r);
 }
 
-Detector::Detector(const string &conf, vector<Packet> &pkts) :
-        conf(conf), packets(pkts) {
-    this->conf = conf;
-    this->packets = packets;
+Detector::Detector(const string &conf) :
+        conf(conf) {
+//    this->conf = conf;
+//    this->packets = packets;
     string str;                      // This will store your tokens
     ifstream file(conf);
 
@@ -135,14 +99,6 @@ Detector::Detector(const string &conf, vector<Packet> &pkts) :
             params.push_back(sub);
         }
 
-//        for_each(params.begin(), params.end(), print);
-//        string keyword = params[KEYWORD];
-//        params.erase (params.begin() + KEYWORD);
-//        for_each(params.begin(), params.end(), print);
-//        cout << "key: " << keyword << endl;
-
-
-//        rules.push_back(Rule())
         createRule(params, id);
         getline(file, str);
         ++id;
@@ -151,11 +107,13 @@ Detector::Detector(const string &conf, vector<Packet> &pkts) :
 //    cout << "reglas: " << rules.size() << endl;
 }
 
-void Detector::detect(){
-    Packet p = packets.back();
-    if (!p.is_complete()){return;}
+void Detector::detect(Packet packet){
+//    std::lock_guard<std::mutex> lock(m);
+//    Packet p = packets.getLatest();
+//    if (!p.is_complete()){return;}
+
     for (size_t j = 0; j < rules.size(); ++j) {
-            rules[j].checkPacket(p);
+            rules[j].checkPacket(packet);
     }
-    packets.pop_back();
+//    packets.popPacket();
 }

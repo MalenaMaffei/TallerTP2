@@ -1,6 +1,6 @@
 CAPTURA
 Lee el archi lo parseo y x c uno crea un Packet
-Sniffer-> lee arch usando malloc para los datos, crea packets.
+Reader-> lee arch usando malloc para los datos, crea packets.
 Packet-> tiene sus datas, saben si otro packet es su hermano.
     attr complete? y part nr. attr primero, ultimo, parte, entero. Despues me fijo como lo escondo
 Detector -> Lee arch, crea reglas, hace que una regla lea un paquete.

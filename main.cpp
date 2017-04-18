@@ -2,62 +2,108 @@
 #include <string>
 #include <iostream>
 //#include "Packet.h"
-#include "Sniffer.h"
+//#include "Sniffer.h"
+#include "Reader.h"
 #include "Detector.h"
 //#include "Rule.h"
 #include <fstream>
 #include <vector>
 #include "Assembler.h"
 #include <algorithm>
+#include "PacketContainer.h"
+#include "Thread.h"
+
 using std::string;
 using std::endl;
 using std::ios;
 using std::ifstream;
 using std::cout;
 
+
 int main(int argc, char ** argv){
     if (argc < 3)
         return 1;
 
-//    vector<string> words = {"hello", "world", "caca"};
-//    Rule r = Rule("0", "1",0,"always",words,0);
-//    r.checkData("hola ld");
-//    cout << "primer palabra: " << r.getMatches()[0]<<endl;
-//    cout << "segunda: " << r.getMatches()[1] << endl;
-//    cout << "tercera: " << r.getMatches()[2] << endl;
-//    cout << "ocurrencia? " << r.getOccurrences() << endl;
 
 
-
-    vector<Packet> packets;
     vector<string> captures;
-    vector<Sniffer> sniffers;
+    vector<Reader> sniffers;
     string conf = argv[1];
-//    string file = argv[2];
 
     for (int i = 2; i < argc; ++i) {
         string parametro = argv[i];
         captures.push_back(parametro);
     }
-    Detector d = Detector(conf, packets);
-    Assembler a = Assembler(packets);
+    Detector d(conf);
 
-    std::for_each(captures.begin(), captures.end(), [&](string filename){
-        sniffers.push_back(Sniffer(filename, packets));
-    });
+    PacketContainer packetC(d);
 
-//    cout << "sniffers: " << sniffers.size()<<endl;
-//    Sniffer sniff = Sniffer(file, packets);
-    std::for_each(sniffers.begin(), sniffers.end(), [&](Sniffer sniff) {
-        while (!sniff.is_file_done()) {
-            sniff.create_packets();
-            a.assemble();
-            d.detect();
-        }
-    });
+//    Assembler a(packetC);
+
+//    packetC.setAssembler(a);
+//    packetC.setDetector(d);
+//    std::vector<Thread*> threads;
+    std::vector<Reader*> threads;
+
+
+    for (size_t i = 0; i < captures.size(); ++i) {
+        threads.push_back(new Reader(captures[i], packetC));
+    }
+
+//    cout << "threads: " << threads.size() << endl;
+//
+    for (size_t i = 0; i < captures.size(); ++i) {
+        threads[i]->start();
+//        threads[i]->run();
+    }
+//
+    for (size_t i = 0; i < captures.size(); ++i) {
+        threads[i]->join();
+        delete threads[i];
+    }
+
+//    cout << "quedaron" << packetC.getLen() <<endl;
+
+//    std::for_each(captures.begin(), captures.end(), [&](string filename){
+//        sniffers.push_back(Reader(filename, packetC, a, d));
+//    });
+//
+//
+//    std::for_each(sniffers.begin(), sniffers.end(), [&](Reader sniffer) {
+//        while (!sniffer.is_file_done()) {
+//            sniffer.create_packets();
+//            a.assemble();
+//            d.detect();
+//        }
+//    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //    cout << "se generaron: " << packets.size() << "paquetes" << endl;
+
 //    for (int j = 0; j < packets.size(); ++j) {
 //        cout << "id: " << packets[j].getId() << endl;
 //        cout << "src: " << packets[j].getSrc() << endl;
@@ -90,7 +136,7 @@ int main(int argc, char ** argv){
 
 //    d.detect();
 
-//    // Sniffer sniffB = Sniffer(file, packets);
+//    // Reader sniffB = Reader(file, packets);
 
 //    sniff.create_packets();
 

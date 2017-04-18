@@ -25,15 +25,8 @@ echo "-----------------prueba 8------------------"
 #echo "no"
 ./tp tests/t8/rules.cfg tests/t8/packets.cap | diff tests/t8/__stdout__ -
 echo
-#./tp tests/t8/rules.cfg tests/t8/packets.cap
-echo
 echo "-----------------prueba 9------------------"
 #echo "no"
 ./tp tests/t9/spoon.cfg tests/t9/cap0.cap tests/t9/cap1.cap tests/t9/cap2.cap tests/t9/cap3.cap tests/t9/cap4.cap | diff tests/t9/__stdout__ -
-echo "-----------------prueba 10------------------"
-#echo "no"
-#./tp tests/t10/rules.cfg tests/t10/packets.cap | diff tests/t10/__stdout__ -
 echo
-#./tp tests/t10/rules.cfg tests/t10/packets.cap
-echo 
-#tests/t10/__stdout__
+
